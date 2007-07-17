@@ -1,12 +1,12 @@
 %define _mozillapath	%{_libdir}/mozilla/plugins
 
 %define name		djvulibre
-%define release		%mkrel 2
-%define version		3.5.18
+%define release		%mkrel 1
+%define version		3.5.19
 
 %define major		15
-%define libname		%mklibname %{name} %major
-%define libnamedev	%mklibname %{name} %major -d
+%define libname		%mklibname %{name} %{major}
+%define develname	%mklibname %{name} -d
 
 Summary:		DjVu viewers, encoders and utilities
 Name:			%{name}
@@ -17,13 +17,14 @@ URL:			http://sourceforge.net/project/showfiles.php?group_id=32953
 License:		GPL
 Group:			Publishing
 Source:			http://download.sourceforge.net/djvu/%{name}-%{version}.tar.bz2
-BuildRoot:		%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-BuildRequires:		ImageMagick
+
+BuildRequires:		imagemagick
 BuildRequires:		qt3-devel
 BuildRequires:		libxt-devel
 BuildRequires:		xdg-utils
 BuildRequires:		gnome-mime-data
 BuildRequires:		kdelibs-common
+BuildRoot:		%{_tmppath}/%{name}-%{version}-buildroot
 
 %description
 DjVu is a web-centric format and software platform for distributing 
@@ -52,26 +53,28 @@ DjVulibre-3.5 contains:
 - A set of decoders to convert DjVu to a number of other formats. 
 - An up-to-date version of the C++ DjVu Reference Library.
 
-%package -n %libname
+%package -n %{libname}
 Summary:		DjVulibre library
 Group:			System/Libraries
 
-%description -n %libname
-Djvulibre libraries
+%description -n %{libname}
+Djvulibre shared libraries.
 
-%package -n %libnamedev
+%package -n %{develname}
 Summary:		DjVulibre development files
 Group:			Development/Other
-Requires:		%libname = %version
-Provides:		libdjvulibre-devel = %version-%release
+Requires:		%{libname} = %{version}-%{release}
+Provides:		libdjvulibre-devel = %{version}-%{release}
+Provides:		%{name}-devel = %{version}-%{release}
+Obsoletes:		%mklibname %{name} 15 -d
 
-%description -n %libnamedev
+%description -n %{develname}
 DjVulibre development files.
 
 %package browser-plugin
 Summary:		DjVulibre browser plugin
 Group:			Publishing
-Requires:		%name = %version
+Requires:		%{name} = %{version}
 
 %description browser-plugin
 A browser plugin that works with most Unix browsers.
@@ -94,12 +97,12 @@ export MOC="L%{_prefix}/lib/qt3/bin/moc"
 
 
 # Don't use %%make here
-%{__make} depend
-%{__make}
+%make depend
+%make
 
 %install
-%{__rm} -rf %{buildroot}
-%makeinstall
+rm -rf %{buildroot}
+%makeinstall_std
 # Quick fix to stop ldconfig from complaining
 find %{buildroot}%{_libdir} -name "*.so*" -exec chmod 755 {} \;
 # Quick cleanup of the docs
@@ -115,20 +118,7 @@ ln -s %{_mozillapath}/nsdejavu.so \
          %{buildroot}%{_libdir}/netscape/plugins/nsdejavu.so
 
 # remove original menu (sorry)
-rm -rf %{buildroot}%{_menudir}/*
-
-# menu
-mkdir -p %{buildroot}%{_menudir}
-cat > %{buildroot}%{_menudir}/%{name} << EOF
-?package(%{name}):\
-command="%{_bindir}/djview"\
-title="DjView"\
-longtitle="DjVulibre viewer"\
-needs="x11"\
-icon="djvulibre-djview3.png"\
-isection="Office/Publishing" \
-xdg="true"
-EOF
+#rm -rf %{buildroot}%{_menudir}/*
 
 #gw don't rely on xdg-utils but install them manually
 mkdir %buildroot%_datadir/applications
@@ -148,26 +138,25 @@ mv %buildroot%_datadir/djvu/osi/desktop/djvulibre-mime.xml %buildroot%_datadir/m
 desktop-file-install --vendor="" \
   --remove-category="Application" \
   --add-category="Qt" \
-  --add-category="X-MandrivaLinux-Office-Publishing" \
   --add-category="Graphics" \
   --add-category="Viewer" \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications $RPM_BUILD_ROOT%{_datadir}/applications/*
+  --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/*
 
 %post
-%update_menus
+%{update_menus}
 %update_icon_cache hicolor
-%update_mime_database
-%update_desktop_database
+%{update_mime_database}
+%{update_desktop_database}
 
-%post -n %libname -p /sbin/ldconfig
+%post -n %{libname} -p /sbin/ldconfig
 
-%postun -n %libname -p /sbin/ldconfig
+%postun -n %{libname} -p /sbin/ldconfig
 
 %postun
-%clean_menus
+%{clean_menus}
 %clean_icon_cache hicolor
-%clean_mime_database
-%clean_desktop_database
+%{clean_mime_database}
+%{clean_desktop_database}
 
 %clean
 rm -rf %{buildroot}
@@ -178,7 +167,6 @@ rm -rf %{buildroot}
 %{_bindir}/*
 %{_datadir}/djvu
 %{_mandir}/man1/*
-%{_menudir}/*
 %{_datadir}/applications/djvulibre-djview3.desktop
 %_datadir/mime/packages/*.xml
 %_datadir/icons/hicolor/32x32/apps/*
@@ -186,11 +174,11 @@ rm -rf %{buildroot}
 %{_iconsdir}/hicolor/32x32/mimetypes/*
 %{_iconsdir}/hicolor/48x48/mimetypes/*
 
-%files -n %libname
+%files -n %{libname}
 %defattr(-, root, root)
 %{_libdir}/*.so.%{major}*
 
-%files -n %libnamedev
+%files -n %{develname}
 %defattr(-, root, root)
 %{_libdir}/*.so
 %attr(644,root,root) %{_libdir}/*.*a
@@ -201,5 +189,3 @@ rm -rf %{buildroot}
 %defattr(-, root, root)
 %{_libdir}/netscape/plugins/nsdejavu.so
 %{_mozillapath}/nsdejavu.so
-
-
