@@ -16,7 +16,6 @@ BuildRequires:  libxt-devel
 BuildRequires:  xdg-utils
 BuildRequires:  gnome-mime-data
 BuildRequires:  kdelibs-common
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 DjVu is a web-centric format and software platform for distributing 
