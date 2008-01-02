@@ -3,10 +3,10 @@
 %define develname %mklibname %{name} -d
 
 Name:           djvulibre
-Version:        3.5.19
-Release:        %mkrel 3
+Version:        3.5.20
+Release:        %mkrel 1
 Summary:        DjVu viewers, encoders and utilities
-License:        GPL
+License:        GPLv2+
 Group:          Publishing
 URL:            http://sourceforge.net/project/showfiles.php?group_id=32953
 Source0:        http://download.sourceforge.net/djvu/%{name}-%{version}.tar.bz2
