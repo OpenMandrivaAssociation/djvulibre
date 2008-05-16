@@ -62,7 +62,6 @@ Obsoletes:      %{mklibname %{name} 15 -d}
 %description -n %{develname}
 DjVulibre development files.
 
-%if 0
 %package browser-plugin
 Summary:        DjVulibre browser plugin
 Group:          Publishing
@@ -70,7 +69,6 @@ Requires:       %{name} = %{version}-%{release}
 
 %description browser-plugin
 A browser plugin that works with most Unix browsers.
-%endif
 
 %prep
 %setup -q
@@ -223,10 +221,8 @@ rm -rf %{buildroot}
 %{_includedir}/libdjvu
 %_libdir/pkgconfig/*.pc
 
-%if 0
 %files browser-plugin
 %defattr(-, root, root)
 %{_libdir}/netscape/plugins/nsdejavu.so
 %{%{_libdir}/mozilla/plugins}/nsdejavu.so
 %{_mandir}/man1/nsdejavu.1*
-%endif
