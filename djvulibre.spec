@@ -102,15 +102,11 @@ rm -rf doc/CVS 2>/dev/null || :
 find %{buildroot}%{_datadir}/djvu/osi -type f -name '*.xml' -exec \
 %{__perl} -pi -e 's|\r||g' {} ';'
 
-%if 0
-mkdir -p %{buildroot}%{%{_libdir}/mozilla/plugins}
+mkdir -p %{buildroot}%{_libdir}/mozilla/plugins
 mv %{buildroot}%{_libdir}/netscape/plugins/nsdejavu.so \
-        %{buildroot}%{%{_libdir}/mozilla/plugins}/
-ln -s %{%{_libdir}/mozilla/plugins}/nsdejavu.so \
+        %{buildroot}%{_libdir}/mozilla/plugins/
+ln -s %{_libdir}/mozilla/plugins}/nsdejavu.so \
          %{buildroot}%{_libdir}/netscape/plugins/nsdejavu.so
-%else
-%{__rm} %{buildroot}%{_libdir}/netscape/plugins/nsdejavu.so
-%endif
 
 # remove original menu (sorry)
 #rm -rf %{buildroot}%{_menudir}/*
@@ -118,14 +114,14 @@ ln -s %{%{_libdir}/mozilla/plugins}/nsdejavu.so \
 #gw don't rely on xdg-utils but install them manually
 mkdir %buildroot%_datadir/applications
 mv %buildroot%_datadir/djvu/djview3/desktop/djvulibre-djview3.desktop %buildroot%_datadir/applications/
-mkdir -p %buildroot%_datadir/icons/hicolor/32x32/apps
-mv %buildroot%_datadir/djvu/djview3/desktop/hi32-djview3.png %buildroot%_datadir/icons/hicolor/32x32/apps/djvulibre-djview3.png
-mkdir -p %buildroot%_datadir/icons/hicolor/32x32/mimetypes
-mv %buildroot%_datadir/djvu/osi/desktop/hi32-djvu.png %buildroot%_datadir/icons/hicolor/32x32/mimetypes/image-vnd.djvu.mime.png
-mkdir -p %buildroot%_datadir/icons/hicolor/22x22/mimetypes
-mv %buildroot%_datadir/djvu/osi/desktop/hi22-djvu.png %buildroot%_datadir/icons/hicolor/22x22/mimetypes/image-vnd.djvu.mime.png
-mkdir -p %buildroot%_datadir/icons/hicolor/48x48/mimetypes
-mv %buildroot%_datadir/djvu/osi/desktop/hi48-djvu.png %buildroot%_datadir/icons/hicolor/48x48/mimetypes/image-vnd.djvu.mime.png
+mkdir -p %buildroot%_iconsdir/hicolor/32x32/apps
+mv %buildroot%_datadir/djvu/djview3/desktop/hi32-djview3.png %buildroot%_iconsdir/hicolor/32x32/apps/djvulibre-djview3.png
+mkdir -p %buildroot%_iconsdir/hicolor/32x32/mimetypes
+mv %buildroot%_datadir/djvu/osi/desktop/hi32-djvu.png %buildroot%_iconsdir/hicolor/32x32/mimetypes/image-vnd.djvu.mime.png
+mkdir -p %buildroot%_iconsdir/hicolor/22x22/mimetypes
+mv %buildroot%_datadir/djvu/osi/desktop/hi22-djvu.png %buildroot%_iconsdir/hicolor/22x22/mimetypes/image-vnd.djvu.mime.png
+mkdir -p %buildroot%_iconsdir/hicolor/48x48/mimetypes
+mv %buildroot%_datadir/djvu/osi/desktop/hi48-djvu.png %buildroot%_iconsdir/hicolor/48x48/mimetypes/image-vnd.djvu.mime.png
 mkdir -p %buildroot%_datadir/mime/packages
 mv %buildroot%_datadir/djvu/osi/desktop/djvulibre-mime.xml %buildroot%_datadir/mime/packages
 
@@ -224,5 +220,5 @@ rm -rf %{buildroot}
 %files browser-plugin
 %defattr(-, root, root)
 %{_libdir}/netscape/plugins/nsdejavu.so
-%{%{_libdir}/mozilla/plugins}/nsdejavu.so
+%{_libdir}/mozilla/plugins/nsdejavu.so
 %{_mandir}/man1/nsdejavu.1*
