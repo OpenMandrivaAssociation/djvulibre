@@ -133,10 +133,12 @@ desktop-file-install --vendor="" \
   --add-category="Viewer" \
   --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/*
 
+%if %mdkversion < 200900
 %post
 %update_icon_cache hicolor
 %{update_mime_database}
 %{update_desktop_database}
+%endif
 
 %if %mdkversion < 200900
 %post -n %{libname} -p /sbin/ldconfig
@@ -146,10 +148,12 @@ desktop-file-install --vendor="" \
 %postun -n %{libname} -p /sbin/ldconfig
 %endif
 
+%if %mdkversion < 200900
 %postun
 %clean_icon_cache hicolor
 %{clean_mime_database}
 %{clean_desktop_database}
+%endif
 
 %clean
 rm -rf %{buildroot}
