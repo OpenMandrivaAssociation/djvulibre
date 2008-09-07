@@ -1,15 +1,15 @@
-%define major     15
+%define major     21
 %define libname   %mklibname %{name} %{major}
 %define develname %mklibname %{name} -d
 
 Name:           djvulibre
-Version:        3.5.20
-Release:        %mkrel 5
+Version:        3.5.21
+Release:        %mkrel 1
 Summary:        DjVu viewers, encoders and utilities
 License:        GPLv2+
 Group:          Publishing
-URL:            http://sourceforge.net/project/showfiles.php?group_id=32953
-Source0:        http://download.sourceforge.net/djvu/%{name}-%{version}.tar.bz2
+URL:            http://djvu.sourceforge.net/
+Source0:        http://download.sourceforge.net/djvu/%{name}-%{version}.tar.gz
 BuildRequires:  imagemagick
 BuildRequires:  qt3-devel
 BuildRequires:  libxt-devel
