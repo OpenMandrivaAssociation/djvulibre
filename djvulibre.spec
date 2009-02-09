@@ -4,18 +4,18 @@
 
 Name:           djvulibre
 Version:        3.5.21
-Release:        %mkrel 1
+Release:        %mkrel 3
 Summary:        DjVu viewers, encoders and utilities
 License:        GPLv2+
 Group:          Publishing
 URL:            http://djvu.sourceforge.net/
 Source0:        http://download.sourceforge.net/djvu/%{name}-%{version}.tar.gz
+Patch0: djvulibre-3.5.21-qt-mt.patch
 BuildRequires:  imagemagick
 BuildRequires:  qt3-devel
 BuildRequires:  libxt-devel
 BuildRequires:  xdg-utils
 BuildRequires:  gnome-mime-data
-BuildRequires:  kdelibs-common
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
@@ -70,24 +70,22 @@ Requires:       %{name} = %{version}-%{release}
 %description browser-plugin
 A browser plugin that works with most Unix browsers.
 
+
 %prep
 %setup -q
+%patch0 -p0
 
 %build
-export QT_CFLAGS="-I%{_prefix}/lib/qt3/include"
-export QT_LIBS="-L%{_prefix}/lib/qt3/%{_lib} -lqt-mt"
-export MOC="L%{_prefix}/lib/qt3/bin/moc"
-%configure2_5x --enable-shared \
-           --enable-djview \
-           --enable-xmltools \
-           --enable-threads \
-           --enable-debug \
-           --enable-i18n \
-           --enable-desktopfiles
-#           --enable-rpo \
+%configure_qt3 \
+    --prefix=%_prefix \
+    --enable-djview \
+    --enable-xmltools \
+    --with-qt \
+    --enable-threads \
+    --enable-debug \
+    --enable-i18n \
+    --enable-desktopfiles
 
-
-# Don't use %%make here
 %make depend
 %make
 
@@ -98,9 +96,6 @@ rm -rf %{buildroot}
 find %{buildroot}%{_libdir} -name "*.so*" -exec chmod 755 {} \;
 # Quick cleanup of the docs
 rm -rf doc/CVS 2>/dev/null || :
-# fix wrong-script-end-of-line-encoding 
-find %{buildroot}%{_datadir}/djvu/osi -type f -name '*.xml' -exec \
-%{__perl} -pi -e 's|\r||g' {} ';'
 
 mkdir -p %{buildroot}%{_libdir}/mozilla/plugins
 mv %{buildroot}%{_libdir}/netscape/plugins/nsdejavu.so \
@@ -108,11 +103,8 @@ mv %{buildroot}%{_libdir}/netscape/plugins/nsdejavu.so \
 ln -s %{_libdir}/mozilla/plugins}/nsdejavu.so \
          %{buildroot}%{_libdir}/netscape/plugins/nsdejavu.so
 
-# remove original menu (sorry)
-#rm -rf %{buildroot}%{_menudir}/*
-
 #gw don't rely on xdg-utils but install them manually
-mkdir %buildroot%_datadir/applications
+mkdir -p %buildroot%_datadir/applications
 mv %buildroot%_datadir/djvu/djview3/desktop/djvulibre-djview3.desktop %buildroot%_datadir/applications/
 mkdir -p %buildroot%_iconsdir/hicolor/32x32/apps
 mv %buildroot%_datadir/djvu/djview3/desktop/hi32-djview3.png %buildroot%_iconsdir/hicolor/32x32/apps/djvulibre-djview3.png
@@ -132,28 +124,6 @@ desktop-file-install --vendor="" \
   --add-category="Graphics" \
   --add-category="Viewer" \
   --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/*
-
-%if %mdkversion < 200900
-%post
-%update_icon_cache hicolor
-%{update_mime_database}
-%{update_desktop_database}
-%endif
-
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun
-%clean_icon_cache hicolor
-%{clean_mime_database}
-%{clean_desktop_database}
-%endif
 
 %clean
 rm -rf %{buildroot}
@@ -230,3 +200,4 @@ rm -rf %{buildroot}
 %{_libdir}/netscape/plugins/nsdejavu.so
 %{_libdir}/mozilla/plugins/nsdejavu.so
 %{_mandir}/man1/nsdejavu.1*
+
