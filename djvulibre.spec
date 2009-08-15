@@ -4,7 +4,7 @@
 
 Name:           djvulibre
 Version:        3.5.22
-Release:        %mkrel 1
+Release:        %mkrel 2
 Summary:        DjVu viewers, encoders and utilities
 License:        GPLv2+
 Group:          Publishing
