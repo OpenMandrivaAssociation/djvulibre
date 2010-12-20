@@ -107,7 +107,7 @@ rm -f %buildroot%{_bindir}/djview %buildroot%{_mandir}/man1/djview.1*
 mkdir -p %{buildroot}%{_libdir}/mozilla/plugins
 mv %{buildroot}%{_libdir}/netscape/plugins/nsdejavu.so \
         %{buildroot}%{_libdir}/mozilla/plugins/
-ln -s %{_libdir}/mozilla/plugins}/nsdejavu.so \
+ln -s %{_libdir}/mozilla/plugins/nsdejavu.so \
          %{buildroot}%{_libdir}/netscape/plugins/nsdejavu.so
 
 #gw don't rely on xdg-utils but install them manually
