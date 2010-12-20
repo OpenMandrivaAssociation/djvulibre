@@ -97,6 +97,9 @@ find %{buildroot}%{_libdir} -name "*.so*" -exec chmod 755 {} \;
 # Quick cleanup of the docs
 rm -rf doc/CVS 2>/dev/null || :
 
+# conflicts with djview4
+rm -f %buildroot%{_bindir}/djview %buildroot%{_mandir}/man1/djview.1*
+
 mkdir -p %{buildroot}%{_libdir}/mozilla/plugins
 mv %{buildroot}%{_libdir}/netscape/plugins/nsdejavu.so \
         %{buildroot}%{_libdir}/mozilla/plugins/
@@ -138,7 +141,6 @@ rm -rf %{buildroot}
 %{_bindir}/cpaldjvu
 %{_bindir}/csepdjvu
 %{_bindir}/ddjvu
-%exclude %{_bindir}/djview
 %{_bindir}/djview3
 %{_bindir}/djvm
 %{_bindir}/djvmcvt
@@ -160,7 +162,6 @@ rm -rf %{buildroot}
 %{_mandir}/man1/cpaldjvu.1*
 %{_mandir}/man1/csepdjvu.1*
 %{_mandir}/man1/ddjvu.1*
-%exclude %{_mandir}/man1/djview.1*
 %{_mandir}/man1/djview3.1*
 %{_mandir}/man1/djvm.1*
 %{_mandir}/man1/djvmcvt.1*
@@ -176,7 +177,6 @@ rm -rf %{buildroot}
 %{_mandir}/man1/djvutxt.1*
 %{_mandir}/man1/djvuxml.1*
 %{_mandir}/man1/djvuxmlparser.1*
-%exclude %{_mandir}/man1/nsdejavu.1*
 %{_datadir}/applications/djvulibre-djview3.desktop
 %_datadir/mime/packages/*.xml
 %_datadir/icons/hicolor/32x32/apps/*
