@@ -10,7 +10,8 @@ License:        GPLv2+
 Group:          Publishing
 URL:            http://djvu.sourceforge.net/
 Source0:        http://download.sourceforge.net/djvu/%{name}-%{version}.tar.gz
-Patch0: djvulibre-3.5.21-qt-mt.patch
+Patch0:		djvulibre-3.5.2-str-fmt.patch
+Patch1:		djvulibre-3.5.2-fix-link.patch
 BuildRequires:  imagemagick
 BuildRequires:  qt3-devel
 BuildRequires:  libxt-devel
@@ -70,13 +71,16 @@ Requires:       %{name} = %{version}-%{release}
 %description browser-plugin
 A browser plugin that works with most Unix browsers.
 
-
 %prep
 %setup -q
 %patch0 -p0
+%patch1 -p0
 
 %build
-%configure_qt3 \
+export QTDIR=%qt3dir
+export QT_LIBS=-lqt-mt
+export QT_CFLAGS=-I%{qt3include}
+%configure2_5x \
     --prefix=%_prefix \
     --enable-djview \
     --enable-xmltools \
