@@ -4,6 +4,7 @@
 
 Name:           djvulibre
 Version:        3.5.22
+%define subrel	1
 Release:        %mkrel 4
 Summary:        DjVu viewers, encoders and utilities
 License:        GPLv2+
@@ -16,8 +17,9 @@ BuildRequires:  imagemagick
 BuildRequires:  qt3-devel
 BuildRequires:  libxt-devel
 BuildRequires:  xdg-utils
+BuildRequires:  tiff-devel
 BuildRequires:  gnome-mime-data
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
 
 %description
 DjVu is a web-centric format and software platform for distributing 
@@ -88,7 +90,8 @@ export QT_CFLAGS=-I%{qt3include}
     --enable-threads \
     --enable-debug \
     --enable-i18n \
-    --enable-desktopfiles
+    --enable-desktopfiles \
+    --with-tiff
 
 %make depend
 %make
