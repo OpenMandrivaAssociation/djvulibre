@@ -10,7 +10,6 @@ License:        GPLv2+
 Group:          Publishing
 URL:            http://djvu.sourceforge.net/
 Source0:        http://download.sourceforge.net/djvu/%{name}-%{version}.tar.gz
-Patch0:		djvulibre-3.5.2-str-fmt.patch
 Patch1:		djvulibre-3.5.2-fix-link.patch
 BuildRequires:  imagemagick
 BuildRequires:  libxt-devel
@@ -63,14 +62,12 @@ DjVulibre development files.
 
 %prep
 %setup -q
-%patch0 -p0
 %patch1 -p0
 
 %build
 %configure2_5x \
     --prefix=%_prefix \
     --enable-xmltools \
-    --with-qt \
     --enable-threads \
     --enable-debug \
     --enable-i18n \
