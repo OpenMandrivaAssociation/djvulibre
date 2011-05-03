@@ -11,6 +11,7 @@ Group:          Publishing
 URL:            http://djvu.sourceforge.net/
 Source0:        http://download.sourceforge.net/djvu/%{name}-%{version}.tar.gz
 Patch1:		djvulibre-3.5.2-fix-link.patch
+Patch2:		djvulibre-3.5.22-cdefs.patch
 BuildRequires:  imagemagick
 BuildRequires:  libxt-devel
 BuildRequires:  xdg-utils
@@ -63,6 +64,7 @@ DjVulibre development files.
 %prep
 %setup -q
 %patch1 -p0
+%patch2 -p1
 
 %build
 %configure2_5x \
