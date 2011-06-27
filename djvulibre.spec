@@ -3,8 +3,8 @@
 %define develname	%mklibname %{name} -d
 
 Name:           djvulibre
-Version:        3.5.23
-Release:        %mkrel 3
+Version:        3.5.24
+Release:        %mkrel 1
 Summary:        DjVu encoders and utilities
 License:        GPLv2+
 Group:          Publishing
