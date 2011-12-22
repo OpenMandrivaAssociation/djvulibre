@@ -4,7 +4,7 @@
 
 Name:           djvulibre
 Version:        3.5.24
-Release:        %mkrel 2
+Release:        2
 Summary:        DjVu encoders and utilities
 License:        GPLv2+
 Group:          Publishing
@@ -17,7 +17,6 @@ BuildRequires:  libxt-devel
 BuildRequires:  xdg-utils
 BuildRequires:  tiff-devel
 BuildRequires:  gnome-mime-data
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
 
 %description
 DjVu is a web-centric format and software platform for distributing 
@@ -98,12 +97,10 @@ mv %buildroot%_datadir/djvu/osi/desktop/hi48-djvu.png %buildroot%_iconsdir/hicol
 mkdir -p %buildroot%_datadir/mime/packages
 mv %buildroot%_datadir/djvu/osi/desktop/djvulibre-mime.xml %buildroot%_datadir/mime/packages
 
-
-%clean
-rm -rf %{buildroot}
+# cleanups
+rm -f %{buildroot}%{_libdir}/*.*a
 
 %files
-%defattr(-,root,root)
 %doc README COPYRIGHT COPYING INSTALL NEWS TODO doc
 %{_bindir}/any2djvu
 %{_bindir}/bzz
@@ -152,13 +149,9 @@ rm -rf %{buildroot}
 %{_iconsdir}/hicolor/48x48/mimetypes/*
 
 %files -n %{libname}
-%defattr(-,root,root)
 %{_libdir}/*.so.%{major}*
 
 %files -n %{develname}
-%defattr(-,root,root)
 %{_libdir}/*.so
-%attr(0755,root,root) %{_libdir}/*.la
 %{_includedir}/libdjvu
 %_libdir/pkgconfig/*.pc
-
