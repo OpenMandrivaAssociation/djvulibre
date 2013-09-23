@@ -4,13 +4,13 @@
 
 Summary:	DjVu encoders and utilities
 Name:		djvulibre
-Version:	3.5.24
-Release:	4
+Version:	3.5.25.3
+Release:	1
 License:	GPLv2+
 Group:		Publishing
 Url:		http://djvu.sourceforge.net/
-Source0:	http://download.sourceforge.net/djvu/%{name}-%{version}.tar.gz
-Patch1:		djvulibre-3.5.2-fix-link.patch
+Source0:	http://downloads.sourceforge.net/project/djvu/DjVuLibre/3.5.25/%{name}-%{version}.tar.gz
+#Patch1:		djvulibre-3.5.2-fix-link.patch
 Patch2:		djvulibre-3.5.22-cdefs.patch
 
 BuildRequires:	gnome-mime-data
@@ -61,7 +61,7 @@ Provides:	%{name}-devel = %{version}-%{release}
 DjVulibre development files.
 
 %prep
-%setup -q
+%setup -qn %{name}-3.5.25
 %apply_patches
 
 %build
@@ -97,7 +97,7 @@ mkdir -p %{buildroot}%{_datadir}/mime/packages
 mv %{buildroot}%{_datadir}/djvu/osi/desktop/djvulibre-mime.xml %{buildroot}%{_datadir}/mime/packages
 
 %files
-%doc README COPYRIGHT COPYING INSTALL NEWS TODO doc
+%doc README COPYRIGHT COPYING INSTALL NEWS doc
 %{_bindir}/any2djvu
 %{_bindir}/bzz
 %{_bindir}/c44
