@@ -5,7 +5,7 @@
 Summary:	DjVu encoders and utilities
 Name:		djvulibre
 Version:	3.5.25.3
-Release:	6
+Release:	7
 License:	GPLv2+
 Group:		Publishing
 Url:		http://djvu.sourceforge.net/
