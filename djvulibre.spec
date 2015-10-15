@@ -4,8 +4,8 @@
 
 Summary:	DjVu encoders and utilities
 Name:		djvulibre
-Version:	3.5.25.3
-Release:	10
+Version:	3.5.27
+Release:	1
 License:	GPLv2+
 Group:		Publishing
 Url:		http://djvu.sourceforge.net/
@@ -61,7 +61,7 @@ Provides:	%{name}-devel = %{version}-%{release}
 DjVulibre development files.
 
 %prep
-%setup -qn %{name}-3.5.25
+%setup -q
 %apply_patches
 
 %build
@@ -75,7 +75,6 @@ DjVulibre development files.
 	--with-tiff \
 	--disable-static
 
-%make depend
 %make
 
 %install
@@ -85,16 +84,6 @@ find %{buildroot}%{_libdir} -name "*.so*" -exec chmod 755 {} \;
 # Quick cleanup of the docs
 rm -rf doc/CVS 2>/dev/null || :
 rm -rf doc/minilisp/.cvsignore 2 > /dev/null || :
-
-#gw don't rely on xdg-utils but install them manually
-mkdir -p %{buildroot}%{_iconsdir}/hicolor/32x32/mimetypes
-mv %{buildroot}%{_datadir}/djvu/osi/desktop/hi32-djvu.png %{buildroot}%{_iconsdir}/hicolor/32x32/mimetypes/image-vnd.djvu.mime.png
-mkdir -p %{buildroot}%{_iconsdir}/hicolor/22x22/mimetypes
-mv %{buildroot}%{_datadir}/djvu/osi/desktop/hi22-djvu.png %{buildroot}%{_iconsdir}/hicolor/22x22/mimetypes/image-vnd.djvu.mime.png
-mkdir -p %{buildroot}%{_iconsdir}/hicolor/48x48/mimetypes
-mv %{buildroot}%{_datadir}/djvu/osi/desktop/hi48-djvu.png %{buildroot}%{_iconsdir}/hicolor/48x48/mimetypes/image-vnd.djvu.mime.png
-mkdir -p %{buildroot}%{_datadir}/mime/packages
-mv %{buildroot}%{_datadir}/djvu/osi/desktop/djvulibre-mime.xml %{buildroot}%{_datadir}/mime/packages
 
 %files
 %doc README COPYRIGHT COPYING INSTALL NEWS doc
@@ -140,9 +129,7 @@ mv %{buildroot}%{_datadir}/djvu/osi/desktop/djvulibre-mime.xml %{buildroot}%{_da
 %{_mandir}/man1/djvuxml.1*
 %{_mandir}/man1/djvuxmlparser.1*
 %{_datadir}/mime/packages/*.xml
-%{_iconsdir}/hicolor/22x22/mimetypes/*
-%{_iconsdir}/hicolor/32x32/mimetypes/*
-%{_iconsdir}/hicolor/48x48/mimetypes/*
+%{_iconsdir}/hicolor/*/mimetypes/*
 
 %files -n %{libname}
 %{_libdir}/libdjvulibre.so.%{major}*

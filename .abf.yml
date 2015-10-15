@@ -1,4 +1,5 @@
 removed_sources:
   djvulibre-3.5.24.tar.gz: 075d1d4a333a2fe74e4c9240d853be016e27e983
-sources:
   djvulibre-3.5.25.3.tar.gz: ad35056aabb1950f385360ff59520a82a6f779ec
+sources:
+  djvulibre-3.5.27.tar.gz: 99c4f2c621c063bf8c8a1626030539fe5a8675f9
