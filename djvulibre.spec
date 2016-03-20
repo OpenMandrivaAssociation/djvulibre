@@ -1,11 +1,12 @@
 %define major	21
 %define libname	%mklibname %{name} %{major}
 %define devname	%mklibname %{name} -d
+%define _disable_lto 1
 
 Summary:	DjVu encoders and utilities
 Name:		djvulibre
 Version:	3.5.27
-Release:	3
+Release:	4
 License:	GPLv2+
 Group:		Publishing
 Url:		http://djvu.sourceforge.net/
