@@ -6,13 +6,14 @@
 Summary:	DjVu encoders and utilities
 Name:		djvulibre
 Version:	3.5.27
-Release:	5
+Release:	6
 License:	GPLv2+
 Group:		Publishing
 Url:		http://djvu.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/project/djvu/DjVuLibre/3.5.25/%{name}-%{version}.tar.gz
 #Patch1:		djvulibre-3.5.2-fix-link.patch
 Patch2:		djvulibre-3.5.22-cdefs.patch
+Patch3:		djvulibre-3.5.27-glibc-2.27.patch
 
 BuildRequires:	gnome-mime-data
 BuildRequires:	imagemagick
@@ -62,11 +63,10 @@ Provides:	%{name}-devel = %{version}-%{release}
 DjVulibre development files.
 
 %prep
-%setup -q
-%apply_patches
+%autosetup -p1
 
 %build
-%configure2_5x \
+%configure \
 	--prefix=%{_prefix} \
 	--enable-xmltools \
 	--enable-threads \
@@ -76,7 +76,7 @@ DjVulibre development files.
 	--with-tiff \
 	--disable-static
 
-%make
+%make CFLAGS="%{optflags}" CXXFLAGS="%{optflags}"
 
 %install
 %makeinstall_std
