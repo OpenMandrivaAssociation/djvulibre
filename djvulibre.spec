@@ -5,20 +5,19 @@
 
 Summary:	DjVu encoders and utilities
 Name:		djvulibre
-Version:	3.5.27
-Release:	8
+Version:	3.5.28
+Release:	1
 License:	GPLv2+
 Group:		Publishing
 Url:		http://djvu.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/project/djvu/DjVuLibre/3.5.25/%{name}-%{version}.tar.gz
 #Patch1:		djvulibre-3.5.2-fix-link.patch
 Patch2:		djvulibre-3.5.22-cdefs.patch
-Patch3:		djvulibre-3.5.27-glibc-2.27.patch
 
 BuildRequires:	gnome-mime-data
 BuildRequires:	imagemagick
 BuildRequires:	xdg-utils
-BuildRequires:	tiff-devel
+BuildRequires:	pkgconfig(libtiff-4)
 BuildRequires:	pkgconfig(xt)
 
 %description
@@ -76,10 +75,10 @@ DjVulibre development files.
 	--with-tiff \
 	--disable-static
 
-%make CFLAGS="%{optflags}" CXXFLAGS="%{optflags}"
+%make_build CFLAGS="%{optflags}" CXXFLAGS="%{optflags}"
 
 %install
-%makeinstall_std
+%make_install
 # Quick fix to stop ldconfig from complaining
 find %{buildroot}%{_libdir} -name "*.so*" -exec chmod 755 {} \;
 # Quick cleanup of the docs
@@ -129,7 +128,7 @@ rm -rf doc/minilisp/.cvsignore 2 > /dev/null || :
 %{_mandir}/man1/djvutxt.1*
 %{_mandir}/man1/djvuxml.1*
 %{_mandir}/man1/djvuxmlparser.1*
-%{_datadir}/mime/packages/*.xml
+#{_datadir}/mime/packages/*.xml
 %{_iconsdir}/hicolor/*/mimetypes/*
 
 %files -n %{libname}
