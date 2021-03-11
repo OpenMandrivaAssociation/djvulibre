@@ -13,7 +13,7 @@ Url:		http://djvu.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/project/djvu/DjVuLibre/3.5.25/%{name}-%{version}.tar.gz
 #Patch1:		djvulibre-3.5.2-fix-link.patch
 Patch2:		djvulibre-3.5.22-cdefs.patch
-Patch3:		djvulibre-3.5.27-glibc-2.27.patch
+#Patch3:		djvulibre-3.5.27-glibc-2.27.patch
 
 BuildRequires:	gnome-mime-data
 BuildRequires:	imagemagick
