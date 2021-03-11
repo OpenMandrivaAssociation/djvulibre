@@ -5,8 +5,8 @@
 
 Summary:	DjVu encoders and utilities
 Name:		djvulibre
-Version:	3.5.27
-Release:	8
+Version:	3.5.28
+Release:	1
 License:	GPLv2+
 Group:		Publishing
 Url:		http://djvu.sourceforge.net/
@@ -76,10 +76,10 @@ DjVulibre development files.
 	--with-tiff \
 	--disable-static
 
-%make CFLAGS="%{optflags}" CXXFLAGS="%{optflags}"
+%make_build CFLAGS="%{optflags}" CXXFLAGS="%{optflags}"
 
 %install
-%makeinstall_std
+%make_install
 # Quick fix to stop ldconfig from complaining
 find %{buildroot}%{_libdir} -name "*.so*" -exec chmod 755 {} \;
 # Quick cleanup of the docs
