@@ -9,7 +9,7 @@ Version:	3.5.28
 Release:	2
 License:	GPLv2+
 Group:		Publishing
-Url:		http://djvu.sourceforge.net/
+Url:		https://djvu.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/project/djvu/DjVuLibre/3.5.25/%{name}-%{version}.tar.gz
 #Patch1:		djvulibre-3.5.2-fix-link.patch
 Patch2:		djvulibre-3.5.22-cdefs.patch
