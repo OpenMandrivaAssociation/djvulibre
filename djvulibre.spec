@@ -14,6 +14,11 @@ Source0:	http://downloads.sourceforge.net/project/djvu/DjVuLibre/3.5.25/%{name}-
 #Patch1:		djvulibre-3.5.2-fix-link.patch
 Patch2:		djvulibre-3.5.22-cdefs.patch
 
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	gnome-mime-data
 BuildRequires:	imagemagick
 BuildRequires:	xdg-utils
